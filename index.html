@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atelier Codé – Mini jeux</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0a0b27;--panel:#15174a;--ink:#eef0ff;--muted:#a9aed4;--cyan:#35e0ff;--pink:#ff4d8d;--yellow:#ffd23f;--black:#04041a;
+  color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Sora",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55;font-size:16px;overflow-x:hidden;
+  background-image:linear-gradient(rgba(53,224,255,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(53,224,255,.05) 1px,transparent 1px);background-size:32px 32px;
+  animation:grid 8s linear infinite}
+@keyframes grid{to{background-position:0 32px,32px 0}}
+.px{font-family:"Press Start 2P","Courier New",monospace}
+.wrap{max-width:760px;margin:0 auto;padding:0 20px;position:relative}
+header{padding:20px 0 4px;font-size:.8rem;color:var(--yellow)}
+header span{color:var(--pink)}
+.hero{padding:30px 0 22px}
+.hero h1{font-size:clamp(1.25rem,6.2vw,2rem);line-height:1.5;margin:0 0 18px;color:var(--cyan);text-shadow:3px 3px 0 var(--pink)}
+.hero p{margin:0 0 18px;color:var(--muted);max-width:32em}
+.track{position:relative;height:30px;overflow:hidden;margin:6px 0 4px}
+.track i{position:absolute;top:6px;width:16px;height:16px;background:var(--cyan);left:-10%;animation:run 7s linear infinite,bob .5s ease-in-out infinite alternate}
+.track i:first-child{background:#fff}
+.track i:nth-child(1){animation-delay:0s,0s}
+.track i:nth-child(2){animation-delay:.14s,.08s}
+.track i:nth-child(3){animation-delay:.28s,.16s}
+.track i:nth-child(4){animation-delay:.42s,.24s}
+.track i:nth-child(5){animation-delay:.56s,.32s}
+.track i:nth-child(6){animation-delay:.7s,.4s}
+.track b{position:absolute;right:6%;top:7px;width:14px;height:14px;background:var(--pink);animation:blink 1s steps(2) infinite}
+@keyframes run{from{left:-8%}to{left:102%}}
+@keyframes bob{from{transform:translateY(-5px)}to{transform:translateY(5px)}}
+@keyframes blink{50%{opacity:0}}
+.press{font-size:.62rem;color:var(--yellow);animation:blink 1.1s steps(2) infinite;margin-top:14px}
+.list{display:grid;gap:22px;margin-top:10px}
+.card{display:flex;gap:16px;align-items:center;background:var(--panel);border:3px solid var(--cyan);box-shadow:6px 6px 0 var(--black);padding:14px;transition:transform .12s,box-shadow .12s}
+.card:active{transform:translate(4px,4px);box-shadow:2px 2px 0 var(--black)}
+.card.soon{border-style:dashed;border-color:#4a4f99;opacity:.75}
+.th{flex:0 0 78px;height:78px;image-rendering:pixelated}
+.body{flex:1;min-width:0}
+.body h3{margin:0 0 6px;font-size:.75rem;line-height:1.5;color:var(--yellow)}
+.body p{margin:0 0 12px;color:var(--muted);font-size:.9rem}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;font-size:.62rem;padding:11px 14px;text-decoration:none;color:var(--black);border:3px solid var(--black);box-shadow:3px 3px 0 var(--black)}
+.btn:active{transform:translate(3px,3px);box-shadow:0 0 0 var(--black)}
+.play{background:var(--yellow)}
+.btn:focus-visible,a:focus-visible{outline:3px solid #fff;outline-offset:3px}
+.tag{font-size:.6rem;color:var(--cyan);animation:blink 1.4s steps(2) infinite}
+.t-snake{background:conic-gradient(from 90deg at 50% 50%,#35e0ff 0 25%,#7c4dff 0 50%,#35e0ff 0 75%,#7c4dff 0) 0 0/26px 26px}
+.t-memory{background:repeating-conic-gradient(#ff4d8d 0 25%,#ffd23f 0 50%) 0 0/26px 26px}
+.t-quiz{background:repeating-linear-gradient(90deg,#7c4dff 0 13px,#35e0ff 13px 26px)}
+footer{padding:22px 0 40px;color:var(--muted);font-size:.85rem}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="px">ATELIER <span>CODÉ</span></header>
+  <section class="hero">
+    <h1 class="px">Mini jeux pour ton téléphone</h1>
+    <div class="track" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><b></b></div>
+    <p>Phase de test : essaie les jeux et dis-nous ce que tu en penses.</p>
+    <div class="press px">▶ Choisis ton jeu</div>
+  </section>
+
+  <div class="list" id="list"></div>
+  <footer>Créé par dreamTSK-dot. Version de test, de nouveaux jeux arrivent bientôt.</footer>
+</div>
+
+<script>
+// Ajoute tes jeux ici. "demo" = nom du fichier du jeu. "soon:true" = bientôt disponible.
+var GAMES = [
+  {name:"Snake classique", desc:"Le jeu du serpent, au doigt.", thumb:"t-snake", demo:"snake.html"},
+  {name:"Jeu de mémoire", desc:"Retrouve les paires de cartes.", thumb:"t-memory", soon:true},
+  {name:"Quiz perso", desc:"Tes questions, ton score, ton chrono.", thumb:"t-quiz", soon:true}
+];
+
+var list = document.getElementById("list");
+GAMES.forEach(function(g){
+  var card = document.createElement("div");
+  card.className = "card" + (g.soon ? " soon" : "");
+  var actions;
+  if (g.soon) {
+    actions = '<span class="tag px">Bientôt</span>';
+  } else {
+    actions = '<a class="btn px play" href="' + g.demo + '">Jouer</a>';
+  }
+  card.innerHTML = '<div class="th ' + g.thumb + '"></div><div class="body"><h3 class="px">' + g.name + '</h3><p>' + g.desc + '</p><div class="row">' + actions + '</div></div>';
+  list.appendChild(card);
+});
+</script>
+</body>
+</html>
