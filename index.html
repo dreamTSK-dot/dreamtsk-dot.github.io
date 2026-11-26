@@ -55,6 +55,7 @@ header span{color:var(--pink)}
 .t-snake{background:conic-gradient(from 90deg at 50% 50%,#35e0ff 0 25%,#7c4dff 0 50%,#35e0ff 0 75%,#7c4dff 0) 0 0/26px 26px}
 .t-memory{background:repeating-conic-gradient(#ff4d8d 0 25%,#ffd23f 0 50%) 0 0/26px 26px}
 .t-quiz{background:repeating-linear-gradient(90deg,#7c4dff 0 13px,#35e0ff 13px 26px)}
+.t-world{background:linear-gradient(135deg,#3b82d6 0 30%,#e8d59a 30% 40%,#58b046 40% 75%,#7b7f8e 75%)}
 footer{padding:22px 0 40px;color:var(--muted);font-size:.85rem}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -77,6 +78,7 @@ footer{padding:22px 0 40px;color:var(--muted);font-size:.85rem}
 // Ajoute tes jeux ici. "demo" = nom du fichier du jeu. "soon:true" = bientôt disponible.
 var GAMES = [
   {name:"Snake classique", desc:"Le jeu du serpent, au doigt.", thumb:"t-snake", demo:"snake.html"},
+  {name:"Monde ouvert 2D", desc:"Explore, combats des slimes, survis à la nuit.", thumb:"t-world", demo:"monde.html"},
   {name:"Jeu de mémoire", desc:"Retrouve les paires de cartes.", thumb:"t-memory", soon:true},
   {name:"Quiz perso", desc:"Tes questions, ton score, ton chrono.", thumb:"t-quiz", soon:true}
 ];
